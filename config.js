@@ -148,7 +148,7 @@ window.WEDDING = {
      Muốn nhận phản hồi về Google Sheets: làm theo HUONG-DAN.md (mục 4),
      rồi dán đường link Web App vào googleScriptUrl.
      Để trống thì form vẫn hiển thị nhưng chỉ báo "cảm ơn", không lưu. */
-  googleScriptUrl: "",
+  googleScriptUrl: "https://script.google.com/macros/s/AKfycbz33eXfQP7lPictr0pTSmaNJcKOgrkMSnhUmrUxAG5WZKaHq9teuJNVnXgdQboBBMxr/exec",
 
   rsvp: {
     enabled: true,
