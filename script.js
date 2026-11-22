@@ -3,7 +3,7 @@
   "use strict";
   const C = window.WEDDING;
   if (!C) { document.body.innerHTML = "<p style='padding:2rem'>Không đọc được config.js — kiểm tra lại dấu phẩy, ngoặc kép.</p>"; return; }
-
+ 
   /* ---------- Tiện ích ---------- */
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -13,7 +13,7 @@
   const parseDate = (d) => { const [y, m, day] = String(d).split("-").map(Number); return { y, m, d: day }; };
   const weekday = (ds) => { const p = parseDate(ds); return WEEKDAYS[new Date(p.y, p.m - 1, p.d).getDay()]; };
   const eventMoment = (ev) => new Date(`${ev.date}T${ev.time || "00:00"}:00+07:00`);
-
+ 
   /* ---------- Âm lịch (thuật toán Hồ Ngọc Đức, múi giờ +7) ---------- */
   const Lunar = (() => {
     const INT = Math.floor, PI = Math.PI;
@@ -90,7 +90,7 @@
     const p = parseDate(ds), l = Lunar.convert(p.d, p.m, p.y);
     return `(Tức ngày ${l.day} tháng ${l.month}${l.leap ? " nhuận" : ""} năm ${Lunar.canChi(l.year)})`;
   };
-
+ 
   /* ---------- Biểu tượng vẽ nét (tự vẽ) ---------- */
   const S = 'fill="none" stroke="#3c5f94" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
   const ICONS = {
@@ -155,7 +155,7 @@
   const ICON_SEND = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>`;
   const ICON_GIFT = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>`;
   const HEART_STAMP = `<svg viewBox="0 0 100 92" aria-hidden="true"><path d="M50 88 C10 62 0 38 12 20 C24 4 44 8 50 24 C56 8 76 4 88 20 C100 38 90 62 50 88Z" fill="#c8323c"/></svg>`;
-
+ 
   /* ---------- Dữ liệu dẫn xuất ---------- */
   const events = C.events || [];
   const main = events[C.mainEvent] || events[0] || { date: "2027-01-01", time: "00:00" };
@@ -167,7 +167,7 @@
   const P = C.photos || {};
   const album = (P.album || []).filter(Boolean);
   document.title = C.pageTitle || `Thiệp cưới ${first.name} & ${second.name}`;
-
+ 
   /* ---------- Dựng trang ---------- */
   const h = [];
   h.push(`
@@ -201,7 +201,7 @@
     <p class="invite reveal">${esc(C.invitation)}</p>
   </section>
   ${P.invite ? `<img class="photo-wide reveal" src="${esc(P.invite)}" alt="Ảnh cưới" loading="lazy">` : ""}`);
-
+ 
   events.forEach((ev, i) => {
     const p = parseDate(ev.date);
     h.push(`
@@ -215,7 +215,7 @@
     ${i < events.length - 1 ? `<div class="ev-sep"></div>` : ""}
   </section>`);
   });
-
+ 
   if ((C.timeline || []).length) {
     h.push(`
   <section class="sec">
@@ -226,7 +226,7 @@
     </div>
   </section>`);
   }
-
+ 
   if (C.dressCode && C.dressCode.enabled !== false) {
     h.push(`
   <section class="sec">
@@ -236,7 +236,7 @@
     ${C.dressCode.note ? `<p class="t-body dress-note reveal">${esc(C.dressCode.note)}</p>` : ""}
   </section>`);
   }
-
+ 
   const brideFirst = C.nameFirst !== "groom";
   const cpl = brideFirst ? [["Cô dâu", C.bride], ["Chú rể", C.groom]] : [["Chú rể", C.groom], ["Cô dâu", C.bride]];
   h.push(`
@@ -246,7 +246,7 @@
       <div class="paper-heart" aria-hidden="true">${PAPER_HEART}</div>
     </div>
   </section>`);
-
+ 
   if (C.story && C.story.enabled !== false) {
     h.push(`
   <section class="sec">
@@ -258,7 +258,7 @@
     <div class="t-body story-text">${C.story.paragraphs.map((p) => `<p class="reveal">${esc(p)}</p>`).join("")}</div>
   </section>`);
   }
-
+ 
   // Lịch tháng cưới
   const firstDow = (new Date(mainP.y, mainP.m - 1, 1).getDay() + 6) % 7; // T2 = 0
   const daysIn = new Date(mainP.y, mainP.m, 0).getDate();
@@ -270,7 +270,7 @@
     <div class="cal-head reveal"><div><div class="t-script month">Tháng ${mainP.m}</div><div class="t-label" style="color:var(--ink)">Năm ${mainP.y}</div></div>${BOUQUET_BIG}</div>
     <div class="cal-card reveal"><div class="cal-grid">${cells}</div></div>
   </section>`);
-
+ 
   h.push(`
   <section class="sec full countdown">
     ${P.countdown ? `<img class="bg" src="${esc(P.countdown)}" alt="" loading="lazy">` : ""}
@@ -282,7 +282,7 @@
       <div class="cd-box"><b data-k="s">00</b><span>Giây</span></div>
     </div>
   </section>`);
-
+ 
   if (P.memory) {
     h.push(`
   <section class="sec">
@@ -292,7 +292,7 @@
     </div>
   </section>`);
   }
-
+ 
   if (album.length) {
     h.push(`
   <section class="sec">
@@ -303,7 +303,7 @@
     <div class="thumbs reveal" id="thumbs">${album.map((s, i) => `<img src="${esc(s)}" alt="" loading="lazy" data-i="${i}">`).join("")}</div>
   </section>`);
   }
-
+ 
   if (C.rsvp && C.rsvp.enabled !== false) {
     const max = C.rsvp.maxGuests || 10;
     h.push(`
@@ -328,7 +328,7 @@
     </form>
   </section>`);
   }
-
+ 
   if (C.gift && C.gift.enabled !== false) {
     h.push(`
   <section class="sec" id="gift">
@@ -340,7 +340,7 @@
     </button>
   </section>`);
   }
-
+ 
   h.push(`
   <section class="sec thanks">
     ${P.thankYou ? `<img src="${esc(P.thankYou)}" alt="" loading="lazy">` : ""}
@@ -349,9 +349,33 @@
       <div class="t-script reveal">${esc(C.thankYou.title)}</div>
     </div>
   </section>`);
-
+ 
   $("#card").innerHTML = h.join("");
-
+ 
+  /* ---------- Ảnh bìa bên trái cho màn hình máy tính ---------- */
+  const aside = document.createElement("aside");
+  aside.className = "aside";
+  aside.setAttribute("aria-hidden", "true");
+  aside.innerHTML = `${P.hero ? `<img src="${esc(P.hero)}" alt="">` : ""}
+    <div class="ac"><div class="a-title">${esc(C.heroTitle)}</div>
+      <div class="a-names">${esc(first.name)}<span>&amp;</span>${esc(second.name)}</div>
+      <div class="a-meta">${esc(weekday(main.date))} · ${pad(mainP.d)}.${pad(mainP.m)}.${mainP.y} · ${esc(main.time)}</div>
+      <div class="a-cd cd-target"><div><b data-k="d">0</b><span>Ngày</span></div><div><b data-k="h">00</b><span>Giờ</span></div><div><b data-k="m">00</b><span>Phút</span></div><div><b data-k="s">00</b><span>Giây</span></div></div>
+    </div>`;
+  document.body.insertBefore(aside, $("#card"));
+ 
+  /* Canh các nút nổi (nhạc, ô lời chúc) theo đúng vị trí & bề rộng thiệp */
+  const card = $("#card");
+  const syncDock = () => {
+    const r = card.getBoundingClientRect();
+    document.documentElement.style.setProperty("--cl", r.left + "px");
+    document.documentElement.style.setProperty("--cwpx", r.width + "px");
+  };
+  syncDock();
+  window.addEventListener("resize", syncDock);
+  if ("ResizeObserver" in window) new ResizeObserver(syncDock).observe(card);
+  window.addEventListener("orientationchange", () => setTimeout(syncDock, 300));
+ 
   /* ---------- Giao diện nổi: nhạc, lời chúc, modal ---------- */
   const ui = $("#ui");
   const accHtml = (C.gift?.accounts || []).map((a) => {
@@ -366,7 +390,7 @@
       <button class="btn copy" type="button" data-copy="${esc(a.accountNo)}">Sao chép số tài khoản</button>
     </div>`;
   }).join("");
-
+ 
   ui.innerHTML = `
     ${C.music ? `<button class="music-btn" id="musicBtn" type="button" aria-label="Bật/tắt nhạc">♫</button><audio id="bgm" src="${esc(C.music)}" loop preload="auto"></audio>` : ""}
     ${C.wishes?.enabled !== false ? `<div class="bubbles" id="bubbles" aria-live="polite"></div>` : ""}
@@ -389,13 +413,13 @@
       <img alt="Ảnh cưới phóng to">
       <button class="lb-nav lb-next" type="button" aria-label="Ảnh sau">›</button>
     </div>`;
-
+ 
   const toast = (msg) => { const t = document.createElement("div"); t.className = "toast"; t.textContent = msg; document.body.appendChild(t); setTimeout(() => t.remove(), 2200); };
   const openModal = (m) => { m.classList.remove("hidden"); };
   const closeModal = (m) => { m.classList.add("hidden"); };
   $$(".modal").forEach((m) => m.addEventListener("click", (e) => { if (e.target === m || e.target.closest("[data-close]")) closeModal(m); }));
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") $$(".modal").forEach(closeModal); });
-
+ 
   /* ---------- Nhạc ---------- */
   const audio = $("#bgm"), mBtn = $("#musicBtn");
   const playMusic = () => { if (!audio) return; audio.play().then(() => mBtn.classList.add("playing")).catch(() => {}); };
@@ -403,7 +427,7 @@
     mBtn.addEventListener("click", () => { if (audio.paused) playMusic(); else { audio.pause(); mBtn.classList.remove("playing"); } });
     audio.addEventListener("error", () => mBtn.remove());
   }
-
+ 
   /* ---------- Màn mở thiệp ---------- */
   if (C.opening && C.opening.enabled !== false) {
     const o = document.createElement("div");
@@ -423,7 +447,7 @@
     startRevealSoon();
   }
   function startRevealSoon() { requestAnimationFrame(startReveal); }
-
+ 
   /* ---------- Hiện dần khi cuộn ---------- */
   function startReveal() {
     const els = $$(".reveal");
@@ -431,7 +455,7 @@
     const io = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { threshold: 0.12, rootMargin: "0px 0px -5% 0px" });
     els.forEach((e) => io.observe(e));
   }
-
+ 
   /* ---------- Lấp lánh ---------- */
   if (C.sparkles !== false) {
     const box = $("#sparkles");
@@ -442,22 +466,24 @@
       box.appendChild(s);
     }
   }
-
+ 
   /* ---------- Đếm ngược ---------- */
   const target = eventMoment(main).getTime();
-  const cd = $("#cd");
+  const cds = [$("#cd"), ...$$(".cd-target")].filter(Boolean);
   const tick = () => {
     let diff = Math.max(0, target - Date.now());
     const d = Math.floor(diff / 864e5); diff -= d * 864e5;
     const hh = Math.floor(diff / 36e5); diff -= hh * 36e5;
     const mm = Math.floor(diff / 6e4); const ss = Math.floor((diff - mm * 6e4) / 1e3);
-    cd.querySelector('[data-k="d"]').textContent = d;
-    cd.querySelector('[data-k="h"]').textContent = pad(hh);
-    cd.querySelector('[data-k="m"]').textContent = pad(mm);
-    cd.querySelector('[data-k="s"]').textContent = pad(ss);
+    cds.forEach((cd) => {
+      cd.querySelector('[data-k="d"]').textContent = d;
+      cd.querySelector('[data-k="h"]').textContent = pad(hh);
+      cd.querySelector('[data-k="m"]').textContent = pad(mm);
+      cd.querySelector('[data-k="s"]').textContent = pad(ss);
+    });
   };
   tick(); setInterval(tick, 1000);
-
+ 
   /* ---------- Album ---------- */
   if (album.length) {
     let idx = 0;
@@ -494,7 +520,7 @@
     lb.addEventListener("touchstart", (e) => (lx = e.touches[0].clientX), { passive: true });
     lb.addEventListener("touchend", (e) => { if (lx === null) return; const dx = e.changedTouches[0].clientX - lx; lx = null; if (Math.abs(dx) > 40) showLb(li + (dx < 0 ? 1 : -1)); });
   }
-
+ 
   /* ---------- Gửi dữ liệu về Google Sheets ---------- */
   const SCRIPT = (C.googleScriptUrl || "").trim();
   const send = (data) => {
@@ -502,7 +528,7 @@
     const body = new URLSearchParams({ ...data, time: new Date().toLocaleString("vi-VN") });
     return fetch(SCRIPT, { method: "POST", mode: "no-cors", body }).then(() => true).catch(() => false);
   };
-
+ 
   /* ---------- Xác nhận tham dự ---------- */
   const form = $("#rsvpForm");
   if (form) {
@@ -521,7 +547,7 @@
       msg.textContent = data.attend === "Sẽ tham dự" ? "Cảm ơn bạn! Hẹn gặp bạn trong ngày vui nhé 💙" : "Cảm ơn bạn đã báo cho chúng mình biết 💙";
     });
   }
-
+ 
   /* ---------- Lời chúc bay lên ---------- */
   const bubbles = $("#bubbles");
   let wishes = [...(C.wishes?.samples || [])], wi = 0;
@@ -536,11 +562,41 @@
     b.innerHTML = `<b>${esc(w.name)}:</b> ${esc(w.text)}`;
     bubbles.appendChild(b);
     const list = $$(".bubble:not(.out)", bubbles);
-    if (list.length > 3) { const o = list[0]; o.classList.add("out"); setTimeout(() => o.remove(), 500); }
-    setTimeout(() => { b.classList.add("out"); setTimeout(() => b.remove(), 500); }, 9000);
+    const maxShown = isDesktop() ? 4 : 2; // điện thoại chỉ hiện tối đa 2 lời chúc cho gọn
+    while (list.length > maxShown) { const o = list.shift(); o.classList.add("out"); setTimeout(() => o.remove(), 500); }
+    setTimeout(() => { b.classList.add("out"); setTimeout(() => b.remove(), 500); }, isDesktop() ? 9000 : 6000);
+  }
+  function isDesktop() { return window.matchMedia("(min-width: 1024px)").matches; }
+ 
+  /* Lời chúc tự ẩn khi: khách đang gõ / chọn (bất kỳ ô nhập nào), đang xem phần
+     Xác nhận tham dự hoặc Mừng cưới, hoặc bàn phím điện thoại đang mở.
+     Trên máy tính lời chúc nằm ở vùng ảnh bên trái nên không che thiệp. */
+  if (bubbles) {
+    let typing = false, inForm = false;
+    const quietSections = new Set();
+    const vv = window.visualViewport;
+    const update = () => {
+      const keyboard = vv ? vv.height < window.innerHeight * 0.75 : false;
+      const quiet = !isDesktop() && (typing || inForm || keyboard);
+      bubbles.classList.toggle("quiet", quiet);
+      bubbles.dataset.quiet = quiet ? "1" : "";
+    };
+    const isField = (el) => !!(el && el.matches && el.matches("input, textarea, select"));
+    document.addEventListener("focusin", (e) => { if (isField(e.target)) { typing = true; update(); } document.body.classList.toggle("form-typing", isField(e.target) && e.target.id !== "wishInput" && !isDesktop()); });
+    document.addEventListener("focusout", () => setTimeout(() => { if (!isField(document.activeElement)) document.body.classList.remove("form-typing"); }, 60));
+    document.addEventListener("focusout", () => setTimeout(() => { typing = isField(document.activeElement); update(); }, 50));
+    if ("IntersectionObserver" in window) {
+      const io2 = new IntersectionObserver((ents) => {
+        ents.forEach((en) => (en.isIntersecting ? quietSections.add(en.target) : quietSections.delete(en.target)));
+        inForm = quietSections.size > 0; update();
+      }, { threshold: 0.05 });
+      ["#rsvp", "#gift"].forEach((id) => { const el = $(id); if (el) io2.observe(el); });
+    }
+    if (vv) vv.addEventListener("resize", update);
+    window.addEventListener("resize", update);
   }
   if (bubbles) {
-    setInterval(() => { if (!wishes.length || document.hidden) return; showBubble(wishes[wi++ % wishes.length]); }, 2800);
+    setInterval(() => { if (!wishes.length || document.hidden || bubbles.dataset.quiet) return; showBubble(wishes[wi++ % wishes.length]); }, 3200);
     if (SCRIPT) {
       fetch(SCRIPT + (SCRIPT.includes("?") ? "&" : "?") + "action=wishes").then((r) => r.json()).then((list) => {
         if (Array.isArray(list) && list.length) { wishes = list.filter((w) => w.text); wi = 0; }
@@ -568,7 +624,7 @@
     try { localStorage.setItem("guest-name", guestName); } catch (_) {}
     closeModal(nameModal); submitWish();
   });
-
+ 
   /* ---------- Hộp mừng cưới ---------- */
   const giftModal = $("#giftModal");
   [$("#openGift"), $("#giftBtn")].forEach((b) => b && b.addEventListener("click", () => openModal(giftModal)));
@@ -580,3 +636,4 @@
     toast("Đã sao chép số tài khoản");
   });
 })();
+ 
