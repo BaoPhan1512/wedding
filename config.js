@@ -63,7 +63,7 @@ window.WEDDING = {
       name: "Lễ Tân Hôn",
       date: "2027-02-28",
       time: "08:00",
-      address: "Tư gia nhà trái · Hương Sơn, Hà Tĩnh",
+      address: "Tư gia nhà trai · Hương Sơn, Hà Tĩnh",
       // Link Google Maps: mở Google Maps > chọn địa điểm > Chia sẻ > Sao chép đường liên kết
       mapUrl: "https://maps.google.com/?q=Ninh+Kieu+Can+Tho",
       lunar: "", // để trống = tự tính ngày âm. Muốn tự ghi thì điền, ví dụ "(Tức ngày 23 tháng Giêng năm Đinh Mùi)"
@@ -72,7 +72,7 @@ window.WEDDING = {
       name: "Tiệc Cưới Thân Mật",
       date: "2027-02-28",
       time: "11:00",
-      address: "Nhà hàng Golden· 225 Nguyễn Tri Phương, Hải Châu, Đà Nẵng"
+      address: "Nhà hàng Golden· 225 Nguyễn Tri Phương, Hải Châu, Đà Nẵng",
       mapUrl: "https://maps.google.com/?q=8+Hai+Ba+Trung+Ninh+Kieu+Can+Tho",
       lunar: "",
     },
